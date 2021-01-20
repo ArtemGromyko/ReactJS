@@ -1,11 +1,11 @@
 import React from 'react'
-import Card from '../card/card'
-import styles from './task.module.css'
+import Card from '../Card'
+import styles from './body.module.css'
 
-function Task(props) {
+function Body(props) {
     return (
         <div>
-            <header className={styles.Header}>
+            <header className={styles.BodyHeader}>
                 <h1>This is the header</h1>
             </header>
             <Card/>
@@ -13,4 +13,4 @@ function Task(props) {
     );
 }
 
-export default Task;
+export default Body;

@@ -1,9 +1,9 @@
 import React from 'react'
-import Task from '../task/task'
+import Body from '../Body/Body';
 
 function App() {
     return (
-        <Task/>
+        <Body/>
     );
 }
 
