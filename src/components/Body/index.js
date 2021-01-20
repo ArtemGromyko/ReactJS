@@ -1,6 +1,6 @@
-import React from 'react'
-import Card from '../Card'
-import styles from './body.module.css'
+import React from 'react';
+import Card from '../Card';
+import styles from './body.module.css';
 
 function Body(props) {
     return (
@@ -8,7 +8,7 @@ function Body(props) {
             <header className={styles.BodyHeader}>
                 <h1>This is the header</h1>
             </header>
-            <Card/>
+            <Card />
         </div>
     );
 }
