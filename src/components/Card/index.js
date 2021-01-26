@@ -1,29 +1,31 @@
 import React from 'react';
 import styles from './card.module.css';
+import classNames from 'classnames';
 
 class Card extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            cardStyle: 'CardUnChecked',
+            checked: false,
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange() {
-        this.setState((prevState) => {
-            return {
-                cardStyle:
-                    prevState.cardStyle === 'CardUnChecked'
-                        ? 'CardChecked'
-                        : 'CardUnChecked',
-            };
-        });
+        this.setState({ checked: !this.state.checked });
     }
 
     render() {
         return (
-            <div className={styles[this.state.cardStyle]}>
+            <div
+                className={
+                    styles[
+                        classNames(
+                            { CardChecked: this.state.checked },
+                            { CardUnChecked: !this.state.checked },
+                        )
+                    ]
+                }>
                 <h2 className={styles.CardCaption}>Caption</h2>
                 <input type="checkbox" onChange={this.handleChange} />
                 <p>Hello world</p>
