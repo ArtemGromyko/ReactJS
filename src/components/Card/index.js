@@ -1,18 +1,55 @@
 import React from 'react';
 import styles from './card.module.css';
 import classNames from 'classnames';
+import { BsPencilSquare } from 'react-icons/bs';
 
 class Card extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            captionValue: 'caption',
+            textValue: 'hello world',
+            currentCaptionValue: 'caption',
+            currentTextValue: 'hello world',
             checked: false,
+            display: true,
         };
-        this.handleChange = this.handleChange.bind(this);
+        this.styleChangeHandler = this.styleChangeHandler.bind(this);
+        this.displayStateChangeHandler = this.displayStateChangeHandler.bind(
+            this,
+        );
+        this.captionChangeHandler = this.captionChangeHandler.bind(this);
+        this.textChangeHandler = this.textChangeHandler.bind(this);
+        this.changeSaveHandler = this.changeSaveHandler.bind(this);
     }
 
-    handleChange() {
+    styleChangeHandler() {
         this.setState({ checked: !this.state.checked });
+    }
+
+    displayStateChangeHandler() {
+        this.setState({
+            display: !this.state.display,
+            currentCaptionValue: this.state.captionValue,
+            currentTextValue: this.state.textValue,
+            checked: false,
+        });
+    }
+
+    captionChangeHandler(event) {
+        this.setState({ currentCaptionValue: event.target.value });
+    }
+
+    textChangeHandler(event) {
+        this.setState({ currentTextValue: event.target.value });
+    }
+
+    changeSaveHandler() {
+        this.setState({
+            captionValue: this.state.currentCaptionValue,
+            textValue: this.state.currentTextValue,
+        });
+        this.displayStateChangeHandler();
     }
 
     render() {
@@ -26,9 +63,46 @@ class Card extends React.Component {
                         )
                     ]
                 }>
-                <h2 className={styles.CardCaption}>Caption</h2>
-                <input type="checkbox" onChange={this.handleChange} />
-                <p>Hello world</p>
+                {this.state.display ? (
+                    <>
+                        <input
+                            type="checkbox"
+                            onChange={this.styleChangeHandler}
+                        />
+                        <button onClick={this.displayStateChangeHandler}>
+                            <BsPencilSquare />
+                        </button>
+                        <h2 className={styles.CardCaption}>
+                            {this.state.captionValue}
+                        </h2>
+                        <p>{this.state.textValue}</p>
+                    </>
+                ) : (
+                    <>
+                        <button onClick={this.changeSaveHandler}>Save</button>
+                        <button onClick={this.displayStateChangeHandler}>
+                            Discard
+                        </button>
+                        <br />
+                        <br />
+                        <input
+                            type="text"
+                            value={this.state.currentCaptionValue}
+                            onChange={this.captionChangeHandler}
+                            maxLength="10"
+                        />
+                        <br />
+                        <br />
+                        <input
+                            type="text"
+                            value={this.state.currentTextValue}
+                            onChange={this.textChangeHandler}
+                            maxLength="50"
+                        />
+                        <br />
+                        <br />
+                    </>
+                )}
             </div>
         );
     }
