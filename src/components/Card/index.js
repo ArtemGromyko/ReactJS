@@ -14,38 +14,42 @@ class Card extends React.Component {
             checked: false,
             display: true,
         };
-        this.StyleChangeHandler = this.StyleChangeHandler.bind(this);
-        this.DisplayStateChangeHandler = this.DisplayStateChangeHandler.bind(
+        this.styleChangeHandler = this.styleChangeHandler.bind(this);
+        this.displayStateChangeHandler = this.displayStateChangeHandler.bind(
             this,
         );
-        this.CaptionChangeHandler = this.CaptionChangeHandler.bind(this);
-        this.TextChangeHandler = this.TextChangeHandler.bind(this);
-        this.ChangeSaveHandler = this.ChangeSaveHandler.bind(this);
+        this.captionChangeHandler = this.captionChangeHandler.bind(this);
+        this.textChangeHandler = this.textChangeHandler.bind(this);
+        this.changeSaveHandler = this.changeSaveHandler.bind(this);
     }
 
-    StyleChangeHandler() {
+    styleChangeHandler() {
         this.setState({ checked: !this.state.checked });
     }
 
-    DisplayStateChangeHandler() {
-        this.setState({ display: !this.state.display });
-        this.setState({ currentCaptionValue: this.state.captionValue });
-        this.setState({ currentTextValue: this.state.textValue });
-        this.setState({ checked: false });
+    displayStateChangeHandler() {
+        this.setState({
+            display: !this.state.display,
+            currentCaptionValue: this.state.captionValue,
+            currentTextValue: this.state.textValue,
+            checked: false,
+        });
     }
 
-    CaptionChangeHandler(event) {
+    captionChangeHandler(event) {
         this.setState({ currentCaptionValue: event.target.value });
     }
 
-    TextChangeHandler(event) {
+    textChangeHandler(event) {
         this.setState({ currentTextValue: event.target.value });
     }
 
-    ChangeSaveHandler() {
-        this.setState({ captionValue: this.state.currentCaptionValue });
-        this.setState({ textValue: this.state.currentTextValue });
-        this.DisplayStateChangeHandler();
+    changeSaveHandler() {
+        this.setState({
+            captionValue: this.state.currentCaptionValue,
+            textValue: this.state.currentTextValue,
+        });
+        this.displayStateChangeHandler();
     }
 
     render() {
@@ -63,9 +67,9 @@ class Card extends React.Component {
                     <>
                         <input
                             type="checkbox"
-                            onChange={this.StyleChangeHandler}
+                            onChange={this.styleChangeHandler}
                         />
-                        <button onClick={this.DisplayStateChangeHandler}>
+                        <button onClick={this.displayStateChangeHandler}>
                             <BsPencilSquare />
                         </button>
                         <h2 className={styles.CardCaption}>
@@ -75,8 +79,8 @@ class Card extends React.Component {
                     </>
                 ) : (
                     <>
-                        <button onClick={this.ChangeSaveHandler}>Save</button>
-                        <button onClick={this.DisplayStateChangeHandler}>
+                        <button onClick={this.changeSaveHandler}>Save</button>
+                        <button onClick={this.displayStateChangeHandler}>
                             Discard
                         </button>
                         <br />
@@ -84,7 +88,7 @@ class Card extends React.Component {
                         <input
                             type="text"
                             value={this.state.currentCaptionValue}
-                            onChange={this.CaptionChangeHandler}
+                            onChange={this.captionChangeHandler}
                             maxLength="10"
                         />
                         <br />
@@ -92,7 +96,7 @@ class Card extends React.Component {
                         <input
                             type="text"
                             value={this.state.currentTextValue}
-                            onChange={this.TextChangeHandler}
+                            onChange={this.textChangeHandler}
                             maxLength="50"
                         />
                         <br />
