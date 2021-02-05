@@ -7,10 +7,10 @@ class Card extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            captionValue: 'caption',
-            textValue: 'hello world',
-            currentCaptionValue: 'caption',
-            currentTextValue: 'hello world',
+            captionValue: props.caption,
+            textValue: props.text,
+            currentCaptionValue: props.caption,
+            currentTextValue: props.text,
             checked: false,
             display: true,
         };
@@ -36,6 +36,11 @@ class Card extends React.Component {
         });
     }
 
+    componentDidUpdate() {
+        if (this.props.viewOnly && !this.state.display)
+            this.setState({ display: true });
+    }
+
     captionChangeHandler(event) {
         this.setState({ currentCaptionValue: event.target.value });
     }
@@ -53,6 +58,8 @@ class Card extends React.Component {
     }
 
     render() {
+        let disp =
+            this.state.display || (!this.state.display && this.props.viewOnly);
         return (
             <div
                 className={
@@ -63,15 +70,18 @@ class Card extends React.Component {
                         )
                     ]
                 }>
-                {this.state.display ? (
+                {disp ? (
                     <>
                         <input
                             type="checkbox"
                             onChange={this.styleChangeHandler}
                         />
-                        <button onClick={this.displayStateChangeHandler}>
-                            <BsPencilSquare />
-                        </button>
+                        {!this.props.viewOnly && (
+                            <button onClick={this.displayStateChangeHandler}>
+                                <BsPencilSquare />
+                            </button>
+                        )}
+
                         <h2 className={styles.CardCaption}>
                             {this.state.captionValue}
                         </h2>

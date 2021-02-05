@@ -1,12 +1,12 @@
 import React from 'react';
-import Card from '../Card';
+import CardList from '../CardList';
 import styles from './body.module.css';
 
 class Body extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            display: true,
+            viewOnly: false,
         };
     }
 
@@ -16,7 +16,7 @@ class Body extends React.Component {
                 <header className={styles.BodyHeader}>
                     <h1>This is the header</h1>
                 </header>
-                <Card />
+                <CardList />
             </div>
         );
     }
