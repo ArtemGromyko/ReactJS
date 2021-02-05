@@ -76,11 +76,11 @@ class Card extends React.Component {
                             type="checkbox"
                             onChange={this.styleChangeHandler}
                         />
-                        {!this.props.viewOnly ? (
+                        {!this.props.viewOnly && (
                             <button onClick={this.displayStateChangeHandler}>
                                 <BsPencilSquare />
                             </button>
-                        ) : null}
+                        )}
 
                         <h2 className={styles.CardCaption}>
                             {this.state.captionValue}
