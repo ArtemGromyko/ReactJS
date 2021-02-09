@@ -1,5 +1,12 @@
 import React from 'react';
 import Card from '../Card';
+import styled from 'styled-components';
+
+const StyledCheckbox = styled.input`
+    cursor: pointer;
+    margin: 20px;
+    padding: 20px;
+`;
 
 class CardList extends React.Component {
     constructor(props) {
@@ -30,7 +37,7 @@ class CardList extends React.Component {
     render() {
         return (
             <div>
-                <input
+                <StyledCheckbox
                     type="checkbox"
                     id="viewCheckbox"
                     onChange={this.viewModeChangeHandler}
