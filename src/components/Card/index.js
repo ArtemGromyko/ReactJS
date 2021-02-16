@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './card.module.css';
 import classNames from 'classnames';
 import { BsPencilSquare } from 'react-icons/bs';
+import CardHeader from '../CardHeder';
+import CardBody from '../CardBody';
 
 class Card extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            captionValue: props.caption,
-            textValue: props.text,
             currentCaptionValue: props.caption,
             currentTextValue: props.text,
             checked: false,
@@ -25,13 +25,14 @@ class Card extends React.Component {
 
     styleChangeHandler() {
         this.setState({ checked: !this.state.checked });
+        this.props.changeCheckboxCallback(this.props.id);
     }
 
     displayStateChangeHandler() {
         this.setState({
             display: !this.state.display,
-            currentCaptionValue: this.state.captionValue,
-            currentTextValue: this.state.textValue,
+            currentCaptionValue: this.state.currentCaptionValue,
+            currentTextValue: this.state.currentTextValue,
             checked: false,
         });
     }
@@ -50,11 +51,12 @@ class Card extends React.Component {
     }
 
     changeSaveHandler() {
-        this.setState({
-            captionValue: this.state.currentCaptionValue,
-            textValue: this.state.currentTextValue,
-        });
         this.displayStateChangeHandler();
+        this.props.changeCardCallback(
+            this.props.id,
+            this.state.currentCaptionValue,
+            this.state.currentTextValue,
+        );
     }
 
     render() {
@@ -70,49 +72,43 @@ class Card extends React.Component {
                         )
                     ]
                 }>
-                {disp ? (
-                    <>
-                        <input
-                            type="checkbox"
-                            onChange={this.styleChangeHandler}
-                        />
-                        {!this.props.viewOnly && (
-                            <button onClick={this.displayStateChangeHandler}>
-                                <BsPencilSquare />
+                <>
+                    {disp ? (
+                        <>
+                            <input
+                                type="checkbox"
+                                onChange={this.styleChangeHandler}
+                            />
+                            {!this.props.viewOnly && (
+                                <button
+                                    onClick={this.displayStateChangeHandler}>
+                                    <BsPencilSquare />
+                                </button>
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            <button onClick={this.changeSaveHandler}>
+                                Save
                             </button>
-                        )}
-
-                        <h2 className={styles.CardCaption}>
-                            {this.state.captionValue}
-                        </h2>
-                        <p>{this.state.textValue}</p>
-                    </>
-                ) : (
-                    <>
-                        <button onClick={this.changeSaveHandler}>Save</button>
-                        <button onClick={this.displayStateChangeHandler}>
-                            Discard
-                        </button>
-                        <br />
-                        <br />
-                        <input
-                            type="text"
-                            value={this.state.currentCaptionValue}
-                            onChange={this.captionChangeHandler}
-                            maxLength="10"
-                        />
-                        <br />
-                        <br />
-                        <input
-                            type="text"
-                            value={this.state.currentTextValue}
-                            onChange={this.textChangeHandler}
-                            maxLength="50"
-                        />
-                        <br />
-                        <br />
-                    </>
-                )}
+                            <button onClick={this.displayStateChangeHandler}>
+                                Discard
+                            </button>
+                            <br />
+                            <br />
+                        </>
+                    )}
+                </>
+                <CardHeader
+                    caption={this.state.currentCaptionValue}
+                    display={this.state.display}
+                    captionChangeCallBack={this.captionChangeHandler}
+                />
+                <CardBody
+                    text={this.state.currentTextValue}
+                    display={this.state.display}
+                    textChangeCallBack={this.textChangeHandler}
+                />
             </div>
         );
     }
